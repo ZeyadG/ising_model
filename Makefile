@@ -1,20 +1,16 @@
 CXX = g++
-CXXFLAGS = -std=c++11 -Wall -Iinclude  # Include the "include" directory for headers
-EXEC = ising_model
+CXXFLAGS = -std=c++17 -O3 -Wall -shared -fPIC -Iinclude $(shell python3 -m pybind11 --includes)
+TARGET = libising$(shell python3-config --extension-suffix)
 
-all: $(EXEC)
+SRC = src/particle.cpp src/lattice.cpp src/ising_model.cpp src/binding.cpp
 
-$(EXEC): src/main.o src/ising.o
-	$(CXX) $(CXXFLAGS) -o $(EXEC) src/main.o src/ising.o
+all: $(TARGET)
 
-src/main.o: src/main.cpp include/ising.h
-	$(CXX) $(CXXFLAGS) -c src/main.cpp -o src/main.o
-
-src/ising.o: src/ising.cpp include/ising.h
-	$(CXX) $(CXXFLAGS) -c src/ising.cpp -o src/ising.o
+$(TARGET): $(SRC)
+	$(CXX) $(CXXFLAGS) $^ -o $@
 
 clean:
-	rm -f src/*.o $(EXEC)
+	rm -f $(TARGET) *.png
 
-run: $(EXEC)
-	./$(EXEC)
+run: $(TARGET)
+	python3 ising_plot.py
