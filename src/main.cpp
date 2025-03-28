@@ -3,10 +3,10 @@
 #include "ising_model.h"
 
 int main() {
-    int dimension;
-    std::cout << "Enter dimension (1 for 1D, 2 for 2D): ";
-    std::cin >> dimension;
+    //this class is mainly for testing.
 
+
+    
     // Hardcoded parameters for testing
     int size = 100;
     double beta = 1.0;

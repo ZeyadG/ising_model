@@ -12,5 +12,7 @@ $(TARGET): $(SRC)
 clean:
 	rm -f $(TARGET) *.png
 
+
+
 run: $(TARGET)
 	python3 ising_plot.py
